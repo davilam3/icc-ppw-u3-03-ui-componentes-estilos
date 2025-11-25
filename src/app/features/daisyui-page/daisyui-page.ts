@@ -11,7 +11,7 @@ import { Select } from "./components/select/select";
 
 @Component({
   selector: 'app-daisyui-page',
-  imports: [Drawer, Tabla, Card, Footer, Codsimulado, Condicional, Avatar, Select],
+  imports: [Tabla, Card, Codsimulado, Condicional, Avatar, Select],
   templateUrl: './daisyui-page.html',
   styleUrl: './daisyui-page.css',
 })
