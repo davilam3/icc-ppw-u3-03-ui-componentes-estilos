@@ -2,18 +2,18 @@ import { CommonModule } from '@angular/common';
 import { Component, effect, inject, signal } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Auth, AuthService } from '../../../../core/services/firebase/auth';
+import { AuthService } from '../../../../core/services/firebase/auth';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { of } from 'rxjs';
-import { formUtils } from '../../../../share/Utils/formUtils';
+import { formUtils } from '../../../../share/services/Utils/formUtils';
 
 
 @Component({
   selector: 'app-login-page',
   standalone: true,
-  imports: [CommonModule,RouterModule, ReactiveFormsModule],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule],
   templateUrl: './login-page.html',
-  styleUrls: ['./login-page.css'],
+  styleUrl: './login-page.css',
 })
 export class LoginPage {
   private fb = inject(FormBuilder);
@@ -96,4 +96,5 @@ export class LoginPage {
   //   const { email, password } = this.loginForm.value;
   //   this.loginTrigger.set({ email, password });
   // }
+
 }

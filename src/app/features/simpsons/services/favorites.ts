@@ -19,6 +19,7 @@ export class FavoritesService {
    */
   addFavorite(nombre: string, image: string, customName?: string): Observable<any> {
     const user = this.authService.currentUser();
+
     
     if (!user) {
       throw new Error('Usuario no autenticado');

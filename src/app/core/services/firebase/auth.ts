@@ -6,15 +6,15 @@ import { from, Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-
-
+  
 export class AuthService {
   private auth: Auth = inject(Auth);
+
   // Signal para el usuario actual
   currentUser = signal<User | null>(null);
-  
+
   // Observable del estado de autenticación
-  user$ = user( this.auth);
+  user$ = user(this.auth);
 
   constructor() {
     // Suscribirse a cambios en el estado de autenticación
@@ -31,7 +31,6 @@ export class AuthService {
     return from(promise);
   }
 
-  
   /**
    * Login con email y password
    */
@@ -43,11 +42,11 @@ export class AuthService {
   /**
    * Login con Google
    */
-//   loginWithGoogle(): Observable<any> {
-//     const provider = new GoogleAuthProvider();
-//     const promise = signInWithPopup(this.auth, provider);
-//     return from(promise);
-//   }
+  //   loginWithGoogle(): Observable<any> {
+  //     const provider = new GoogleAuthProvider();
+  //     const promise = signInWithPopup(this.auth, provider);
+  //     return from(promise);
+  //   }
 
   /**
    * Cerrar sesión
@@ -63,9 +62,4 @@ export class AuthService {
   isAuthenticated(): boolean {
     return this.currentUser() !== null;
   }
-
 }
-
-
-export { Auth };
-

@@ -52,21 +52,21 @@
               Ver Detalle
             </a>
           </td>
-
-        </tr>
-        }
-        <!-- Dentro del @for de personajes, agregar una nueva celda -->
+                  <!-- Dentro del @for de personajes, agregar una nueva celda -->
         <td>
-          @if (isFavorite(character.character)) {
+          @if (isFavorite(personaje.name)) {
           <button class="btn btn-sm btn-ghost" disabled>
             ⭐ En favoritos
           </button>
           } @else {
-          <button class="btn btn-sm btn-primary" (click)="addToFavorites(character)">
+          <button class="btn btn-sm btn-primary" (click)="addToFavorites(personaje)">
             ⭐ Agregar
           </button>
           }
         </td>
+
+        </tr>
+        }
       </tbody>
     </table>
   </div>
@@ -106,7 +106,8 @@
       @for (favorite of favorites(); track favorite.id) {
       <div class="card bg-base-100 shadow-xl">
         <figure class="px-4 pt-4">
-          <img [src]="favorite.image" [alt]="favorite.nombre" class="rounded-xl h-48 w-full object-cover" />
+          <img [src]="favorite.image" [alt]="favorite.nombre" class="rounded-xl h-48 w-full object-cover"
+           />
         </figure>
         <div class="card-body">
           <h3 class="card-title text-sm">{{ favorite.nombre }}</h3>

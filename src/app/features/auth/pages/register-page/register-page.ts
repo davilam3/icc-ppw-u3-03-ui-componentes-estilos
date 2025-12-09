@@ -5,17 +5,18 @@ import { Auth } from '@angular/fire/auth';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { of } from 'rxjs';
-import { formUtils } from '../../../../share/Utils/formUtils';
 import { AuthService } from '../../../../core/services/firebase/auth';
+import { formUtils } from '../../../../share/services/Utils/formUtils';
 
 @Component({
   selector: 'app-register-page',
+  standalone: true,
   imports: [CommonModule, ReactiveFormsModule, RouterModule],
   templateUrl: './register-page.html',
-  styleUrls: ['./register-page.css'],
+  styleUrl: './register-page.css',
 })
 export class RegisterPage {
-  
+
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
   private router = inject(Router);
@@ -71,7 +72,22 @@ export class RegisterPage {
       return;
     }
 
+    // this.loading.set(true);
+    // this.errorMessage.set(null);
+
     const { email, password } = this.registerForm.value;
+
+    // this.authService.register(email, password).subscribe({
+    //   next: () => {
+    //     this.loading.set(false);
+    //     // Cambio: Navegar a /home en lugar de /simpsons
+    //     this.router.navigate(['/home']);
+    //   },
+    //   error: (error) => {
+    //     this.loading.set(false);
+    //     this.errorMessage.set(this.getErrorMessage(error.code));
+    //   }
+    // });
 
     // Disparar el registro actualizando el signal
     this.registerTrigger.set({ email, password });

@@ -5,6 +5,8 @@ import { provideHttpClient, withFetch } from '@angular/common/http';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { provideToastr } from 'ngx-toastr';
 
 
 const firebaseConfig = {
@@ -14,6 +16,9 @@ const firebaseConfig = {
   storageBucket: "angular-icc-ppw-3c4a9.firebasestorage.app",
   messagingSenderId: "835757517478",
   appId: "1:835757517478:web:acce1028cc7f31856ca267",
+     // measurementId: "G-KY2G0JRXB2",
+      // projectNumber: "835757517478",
+      // version: "2"
 };
 
 export const appConfig: ApplicationConfig = {
@@ -21,11 +26,14 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
     provideHttpClient(withFetch()),
-    provideFirebaseApp(() => initializeApp({
-      // measurementId: "G-KY2G0JRXB2",
-      // projectNumber: "835757517478",
-      // version: "2"
-    })), provideAuth(() => getAuth()),
+    provideFirebaseApp(() => initializeApp(firebaseConfig)), 
+    provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()), // habilita HttpClient usando la API Fetch
+    provideAnimations(),
+    provideToastr({
+      timeOut: 3000,
+      positionClass: 'toast-top-right',
+      preventDuplicates: true,
+  })
   ]
 };

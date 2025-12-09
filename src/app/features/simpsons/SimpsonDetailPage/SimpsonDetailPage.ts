@@ -4,6 +4,7 @@ import { SimpsonsService } from '../services/simpsons-service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map, switchMap } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { FavoritesService } from '../services/favorites';
 
 @Component({
   selector: 'app-simpson-detail-page',
@@ -15,6 +16,7 @@ import { CommonModule } from '@angular/common';
 export class SimpsonDetailPage {
   private route = inject(ActivatedRoute);
   private service = inject(SimpsonsService);
+  private favoritesService = inject(FavoritesService);
 
     personaje = toSignal(
     this.route.paramMap.pipe(
@@ -23,4 +25,6 @@ export class SimpsonDetailPage {
     ),
     { initialValue: null }
   );
+
+  
  }

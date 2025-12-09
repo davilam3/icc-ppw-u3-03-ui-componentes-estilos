@@ -1,61 +1,112 @@
-<!-- Crear un Navbar con Drawer lateral -->
-<section>
-    <div class="drawer">
-        <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
-        <div class="drawer-content flex flex-col">
-            <div class="navbar bg-base-300 w-full">
-                <div class="flex-none lg:hidden">
-                    <label for="my-drawer-2" aria-label="open sidebar" class="btn btn-square btn-ghost">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                            class="inline-block h-6 w-6 stroke-current">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M4 6h16M4 12h16M4 18h16"></path>
-                        </svg>
-                    </label>
-                </div>
-                <div class="mx-2 flex-1 px-2 font-bold">Diana Avila</div>
-                <div class="mx-2 flex-1 ">
-                    <div class="flex justify-start">
-                        <a routerLink="/login" class="btn btn-primary">
-                            Iniciar Sesión
-                        </a>
-                    </div>
-                </div>
-                <div class="hidden flex-none lg:block">
-                    <ul class="menu menu-horizontal">
-                        <!-- <li><a [routerLink]="'/estilos-page'">Estilos</a></li> -->
-                        <li><a routerLink="/estilos-page" routerLinkActive="bg-primary text-primary-content">Estilos</a>
+<div class="drawer"> 
+    <input id="my-drawer-2"
+     type="checkbox" 
+     class="drawer-toggle" 
+    />
+    <div class="drawer-content flex flex-col"> 
+        <!-- Navbar Desktop/Mobile -->
+        <div class="navbar bg-base-300 w-full"> 
+            <!-- Botón hamburguesa (solo móvil) -->
+            <div class="flex-none lg:hidden"> 
+                <label for="my-drawer-2" 
+                aria-label="open sidebar"
+                class="btn btn-square btn-ghost">
+                <svg xmlns="http://www.w3.org/2000/svg" 
+                fill="none"
+                viewBox="0 0 24 24" 
+                class="inline-block h-6 w-6 stroke-current">
+                        
+                <path 
+                stroke-linecap="round" 
+                stroke-linejoin="round" 
+                stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg> </label> </div> 
+                    
+                    <!-- Área de usuario/login -->
+            <div class="mx-2 flex-1">
+                <div class="flex items-center gap-3 "> 
+                    
+                    <!-- Mostrar botón login si NO está autenticado --> @if
+                    (!isAuthenticated()) { <button (click)="navigateToLogin()" class="btn btn-primary"> 🔐 Iniciar
+                        Sesión </button> } 
+                    
+                       <!-- Mostrar email si está autenticado -->
+                    <!-- Mostrar dropdown de usuario si está autenticado -->
+                      @if (isAuthenticated() && currentUser()) {
+                    <div class="dropdown dropdown-end"> 
+                        <!-- Avatar con trigger --> <label tabindex="0"
+                            class="btn btn-ghost btn-circle avatar">
+                            <div
+                                class="w-10 rounded-full bg-primary text-primary-content flex items-center justify-center">
+                                <span class="text-lg font-bold"> {{ currentUser()?.email?.charAt(0)?.toUpperCase() }}
+                                </span>
+                            </div>
+                        </label> 
+                        <!-- Menú desplegable -->
+                        <ul tabindex="0"
+                            class="mt-3 z-1 p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-56">
+                            <!-- Email del usuario -->
+                            <li class="menu-title"> <span class="text-xs">{{ currentUser()?.email }}</span> </li>
+                            <div class="divider my-0"></div> <!-- Botón de logout -->
+                            <li> <button (click)="logout()" class="btn btn-error btn-sm w-full text-left">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                                    </svg> Cerrar Sesión </button> </li>
+                        </ul>
+                    </div> }
+                </div> 
+                <!-- Menú de navegación (solo desktop) -->
+                <div class="hidden  lg:block">
+                    <ul class="menu menu-horizontal hidden lg:flex ml-auto"> <!-- Botón Estilos -->
+                        <li> @if (isAuthenticated()) { <!-- Habilitado si está autenticado --> <a routerLink="/estilos"
+                                routerLinkActive="bg-primary text-primary-content"> Estilos </a> } @else {
+                            <!-- Deshabilitado si NO está autenticado --> <a
+                                class="btn-disabled opacity-50 cursor-not-allowed"> Estilos 🔒 </a> }
                         </li>
-                        <li><a routerLink="/simpsons" routerLinkActive="bg-primary text-primary-content">Simpsons</a>
-                        </li>
-                        <li><a routerLink="/" routerLinkActive="bg-primary text-primary-content"
-                                [routerLinkActiveOptions]="{ exact: true }">Home</a></li>
-                    </ul>
-                    <!-- Botón de cambio de tema -->
-                    <app-theme-switcher></app-theme-switcher>
-
+                        <!-- Botón Simpsons - Solo visible si está autenticado --> @if (isAuthenticated()) { <li> <a
+                                routerLink="/simpsons" routerLinkActive="bg-primary text-primary-content"> Simpsons </a>
+                        </li> } <!-- Botón Home -->
+                        <li> <a routerLink="/home" routerLinkActive="bg-primary text-primary-content"> Home </a> </li>
+                        <app-theme-switcher></app-theme-switcher>
+                    </ul> 
                 </div>
             </div>
-        </div>
-
-        <!--DRAWER SIDE -->
-        <div class="drawer-side">
-            <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
-            <div class="bg-base-200 min-h-full w-80 p-4 flex flex-col justify-between">
-
-                <ul class="menu">
-                    <li><a routerLink="/estilos-page" routerLinkActive="bg-primary text-primary-content">Estilos</a>
-                    </li>
-                    <li><a routerLink="/simpsons" routerLinkActive="bg-primary text-primary-content">Simpsons</a></li>
-                    <li><a routerLink="/" routerLinkActive="bg-primary text-primary-content"
-                            [routerLinkActiveOptions]="{ exact: true }">Home</a></li>
-                </ul>
-                <div class="pt-4 border-t border-base-300 dropdown dropdown-top">
+        </div> <!-- Drawer Sidebar (móvil) -->
+        <div class="drawer-side"> <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
+            <div class="flex flex-col justify-between h-full bg-base-200 w-80"> <!-- Menú principal -->
+                <ul class="menu menu-horizontal bg-base-200  w-80 p-4"> <!-- Botón Estilos -->
+                    <li> @if (isAuthenticated()) { <a routerLink="/estilos"
+                            routerLinkActive="bg-primary text-primary-content"> Estilos </a> }
+                        @else { <a class="btn-disabled opacity-50 cursor-not-allowed"> Estilos 🔒 </a> } </li>
+                    <!-- Botón Simpsons - Solo visible si está autenticado --> @if (isAuthenticated()) { <li> <a
+                            routerLink="/simpsons" routerLinkActive="bg-primary text-primary-content"> Simpsons </a>
+                    </li> } <!-- Botón Home -->
+                    <li> <a routerLink="/home" routerLinkActive="bg-primary text-primary-content"> Home </a> </li>
+                </ul> <!-- Sección inferior del drawer -->
+                <div class="mt-auto p-4 border-t border-base-300 space-y-3">
+                    <!-- Información de usuario si está autenticado --> @if (isAuthenticated() && currentUser()) { <div
+                        class="flex items-center gap-3 p-3 bg-base-300 rounded-lg">
+                        <div class="avatar placeholder">
+                            <div class="bg-primary text-primary-content w-10 rounded-full"> <span
+                                    class="text-sm font-bold"> {{ currentUser()?.email?.charAt(0)?.toUpperCase() }}
+                                </span> </div>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <p class="text-sm font-medium truncate"> {{ currentUser()?.email }} </p>
+                        </div>
+                    </div> <!-- Botón de logout --> <button (click)="logout()" class="btn btn-error btn-sm w-full text-left"> <svg
+                            xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                        </svg> Cerrar Sesión </button> } <!-- Theme Switcher -->
                     <app-theme-switcher></app-theme-switcher>
                 </div>
-
             </div>
         </div>
     </div>
+</div>
 
-</section>

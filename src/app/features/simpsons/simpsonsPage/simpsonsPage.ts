@@ -12,6 +12,8 @@ import { FavoritesService } from '../services/favorites';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Favorite } from '../interface/favorite.interface';
 import { AuthService } from '../../../core/services/firebase/auth';
+import { SimpsonDetailPage } from '../SimpsonDetailPage/SimpsonDetailPage';
+import { SimpsonsCharacter } from '../interface/simpsonsCharacter';
 
 @Component({
   selector: 'app-simpsons-page',
@@ -40,7 +42,6 @@ export class SimpsonsPage {
   // Signal que mantiene el número total de páginas
   totalPages = signal(0);
   character: any;
-
   constructor() {
     // Effect que actualiza el número de páginas cuando hay datos válidos
     effect(() => {
@@ -174,9 +175,13 @@ export class SimpsonsPage {
   /**
    * Agregar personaje a favoritos
    */
-  addToFavorites(character: any) {
-    const nombre = character.name || character.character;
-    const imagen = character.image || '';
+  addToFavorites(character: SimpsonsCharacter) {
+
+    const nombre = character.name ;
+    const imagen =   `https://cdn.thesimpsonsapi.com/500${character.portrait_path}`;
+    // addToFavorites(personaje: SimpsonDetailPage) {
+    // const nombre = personaje.name;
+    // const imagen = personaje.image; 
 
     if (!nombre) {
       console.error('Nombre del personaje no encontrado');
@@ -235,45 +240,8 @@ export class SimpsonsPage {
    * Verificar si un personaje es favorito
    */
   isFavorite(characterName: string): boolean {
-    return this.favorites().some(fav => fav.nombre === characterName);
+    return this.favorites().some((fav: { nombre: string; }) => fav.nombre === characterName);
   }
-  // private simpsonsService = inject(SimpsonsService);
-  // paginationService = inject(PaginationService);
-  // charactersPerPage = signal(10);
-
-
-  // // simpsonsResource = toSignal(
-  // //   this.simpsonsService.getCharacters(this.paginationService.currentPage()).pipe(
-  // //     map(res => res)
-  // //   ),
-  // //   { initialValue: null }
-  // // );
-
-  // // Signal que mantiene el número total de páginas
-  // totalPages = signal(0);
-
-  // constructor() {
-  //   // Effect que actualiza el número de páginas cuando hay datos válidos
-  //   effect(() => {
-  //     if (this.simpsonsResource1.hasValue()) {
-  //       this.totalPages.set(this.simpsonsResource1.value().pages);
-  //     }
-  //   });
-  // }
-
-  // simpsonsResource1 = rxResource({
-  //   params: () => ({
-  //     page: this.paginationService.currentPage() - 1,
-  //     limit: this.charactersPerPage(),
-  //   }),
-
-  //   stream: ({ params }) => {
-  //     return this.simpsonsService.getCharactersOptions({
-  //       offset: params.page,
-  //       limit: params.limit,
-  //     });
-  //   },
-  // });
 
 }
 
